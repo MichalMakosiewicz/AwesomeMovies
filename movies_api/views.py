@@ -47,14 +47,12 @@ class FavouritesView(APIView):
     def post(self, request):
         body_uni = request.body.decode('utf-8')
         body = json.loads(body_uni)
-        print(body)
-        content = body
         try:
-            movie_id = content.get("movie_id")
-            title = content.get("title")
-            year = content.get("year")
-            movie_type = content.get("type")
-            poster = content.get("poster")
+            movie_id = body.get("movie_id")
+            title = body.get("title")
+            year = body.get("year")
+            movie_type = body.get("type")
+            poster = body.get("poster")
         except AttributeError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         model_instance = FavouriteMovie(id=movie_id, title=title, year=year, type=movie_type, poster=poster)
