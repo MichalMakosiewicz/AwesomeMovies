@@ -4,6 +4,7 @@ import AppToolbar from "./components/toolbar/AppToolbar";
 import Search from "./components/search/Search";
 import Layout from "./components/layout/Layout";
 import Pagination from '@material-ui/lab/Pagination';
+import Favourites from "./components/favourites/Favourites";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +26,7 @@ function App() {
     const [searchName, setSearchName] = useState("eve");
     const [moviesList, setMoviesList] = useState([]);
     const [pagesAmmount, setPagesAmmount] = useState(1);
+    const [location, setLocation] = useState(0);
 
     useEffect(() => {
         getData()
@@ -33,6 +35,29 @@ function App() {
     const getPage = (event, pageNum) => {
         setPage(pageNum + 1);
         getData();
+    }
+
+    const showMenu = () => {
+        console.log("asasas 000")
+        setLocation(0);
+    }
+
+    const showFavourites = () => {
+        setLocation(1);
+    }
+
+    const menuTab = () => {
+        if (location === 0) {
+            return <div>
+                <Search name={searchName} setName={setSearchName} getData={getData}/>
+                <Layout movies={moviesList}/>
+                <Pagination onChange={getPage} className={classes.pagination} count={pagesAmmount} showFirstButton
+                            showLastButton/>
+            </div>
+        } else {
+            return <Favourites />
+        }
+
     }
 
     const getData = () => {
@@ -60,10 +85,8 @@ function App() {
 
     return (
         <div className={classes.root}>
-            <AppToolbar/>
-            <Search name={searchName} setName={setSearchName} getData={getData}/>
-            <Layout movies={moviesList}/>
-            <Pagination onChange={getPage} className={classes.pagination} count={pagesAmmount} showFirstButton showLastButton/>
+            <AppToolbar fav={showFavourites} men={showMenu}/>
+            {menuTab()}
         </div>
     );
 }

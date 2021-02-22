@@ -7,7 +7,6 @@ import {CardActions, CardMedia, IconButton} from "@material-ui/core";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         width: 300,
@@ -30,6 +29,29 @@ function Movie(props) {
 
     const classes = useStyles();
 
+    const addToFavourites = () => {
+        fetch("http://127.0.0.1:8000/api/favourite/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "title": props.data.Title,
+                "year": props.data.Year,
+                "movie_id": props.data.imdbID,
+                "type": props.data.Type,
+                "poster": props.data.Poster
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
     return (
         <Card className={classes.root}>
             <CardHeader
@@ -45,13 +67,13 @@ function Movie(props) {
             <CardActions
                 className={classes.like}
                 disableSpacing>
-                <IconButton aria-label="add to favorites">
+                <IconButton onClick={addToFavourites} aria-label="add to favorites">
                     <FavoriteIcon/>
                 </IconButton>
             </CardActions>
 
         </Card>
-);
+    );
 }
 
 export default Movie;

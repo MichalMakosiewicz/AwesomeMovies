@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function AppToolbar() {
+function AppToolbar(props) {
     const classes = useStyles();
 
 
@@ -38,8 +38,8 @@ function AppToolbar() {
                     <Typography variant="h6" className={classes.title}>
                         Awesome Movies
                     </Typography>
-                    <Button className={classes.button1} color="inherit">Movies</Button>
-                    <Button className={classes.button2} color="inherit">Favourites</Button>
+                    <Button onClick={props.men} className={classes.button1} color="inherit">Movies</Button>
+                    <Button onClick={props.fav} className={classes.button2} color="inherit">Favourites</Button>
                 </Toolbar>
             </AppBar>
         </div>
